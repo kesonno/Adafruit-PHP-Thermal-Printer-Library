@@ -114,7 +114,7 @@ class Adafruit_Thermal
 		# blank page may occur.  The more heating interval, the more
 		# clear, but the slower printing speed.
 
-		$heatTime = $config['heattime'] ?: $this->defaultHeatTime;
+		$heatTime = isset($config['heattime']) ? $config['heattime'] : $this->defaultHeatTime;
 		$this->writeBytes(
 		  27,        # Esc
 		  55,        # 7 (print settings)
@@ -209,10 +209,10 @@ class Adafruit_Thermal
     }
 
 	# Override write() method to keep track of paper feed.
-	public function write($data)
+	public function write()
     {
-        $tot = range(0, sizeof($data));
-		for ($i = 0; $i <= $tot; $i++) {
+        $data = func_get_args();
+		for ($i = 0; $i <= sizeof($data); $i++) {
 			$c = $data[$i];
 			if ($c != 0x13) {
 				$this->timeoutWait();
