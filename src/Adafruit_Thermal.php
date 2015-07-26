@@ -200,7 +200,7 @@ class Adafruit_Thermal
     {
         $args = func_get_args();
 		$this->timeoutWait();
-		$this->timeoutSet(strlen($args) * $this->byteTime);
+		$this->timeoutSet(sizeof($args) * $this->byteTime);
 
         foreach ($args as $arg) {
 			//super(Adafruit_Thermal, self).write(chr(arg));
@@ -211,7 +211,7 @@ class Adafruit_Thermal
 	# Override write() method to keep track of paper feed.
 	public function write($data)
     {
-        $tot = range(0, strlen($data));
+        $tot = range(0, sizeof($data));
 		for ($i = 0; $i <= $tot; $i++) {
 			$c = $data[$i];
 			if ($c != 0x13) {
